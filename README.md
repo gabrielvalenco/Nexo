@@ -2,6 +2,23 @@
 
 A production-inspired, Brazil-focused payments gateway and fintech core built with NestJS. It implements digital wallets, peer-to-peer transfers, and PIX charge generation with real sandbox providers (OpenPix/Efí), emphasizing security, idempotency, and ACID transactions.
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+  U[Client] -->|REST| API[NestJS API]
+  API --> W[Wallets]
+  API --> T[Transfers (ACID)]
+  API --> P[PIX]
+  T -->|QueryRunner| DB[(Postgres)]
+  W --> DB
+  API -->|Idempotency-Key| R[(Redis)]
+  P --> OP[(OpenPix / Efi Sandbox)]
+  OP -->|Webhook| API
+  API -->|Credit| W
+  API --> DOCS[Swagger /docs]
+```
+
 ## Key Features
 - Digital Wallets: create and query user wallets with accurate decimal balances.
 - Money Transfers (ACID): transactional transfer flow using TypeORM `QueryRunner` and pessimistic locks.
