@@ -5,18 +5,18 @@ A production-inspired, Brazil-focused payments gateway and fintech core built wi
 ## Architecture Diagram
 
 ```mermaid
-flowchart LR
-  U[Client] -->|REST| API[NestJS API]
-  API --> W[Wallets]
-  API --> T[Transfers (ACID)]
-  API --> P[PIX]
-  T -->|QueryRunner| DB[(Postgres)]
-  W --> DB
-  API -->|Idempotency-Key| R[(Redis)]
-  P --> OP[(OpenPix / Efi Sandbox)]
-  OP -->|Webhook| API
-  API -->|Credit| W
-  API --> DOCS[Swagger /docs]
+graph LR;
+  U[Client] -->|REST| API[NestJS API];
+  API --> W[Wallets];
+  API --> T[Transfers ACID];
+  API --> P[PIX];
+  T -->|QueryRunner| DB[(Postgres)];
+  W --> DB;
+  API -->|Idempotency-Key| R[(Redis)];
+  P --> OP[OpenPix/Efi Sandbox];
+  OP -->|Webhook| API;
+  API -->|Credit| W;
+  API --> DOCS[Swagger /docs];
 ```
 
 ## Key Features
